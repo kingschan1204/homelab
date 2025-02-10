@@ -43,7 +43,23 @@ resizepart 1 100%
 
 最后为了让验证扩容效果，可以试试`重启下虚拟机`，然后再用 fdisk 命令查询一下：
 
+## 安装openssh服务器
+```
+sudo apt update
+sudo apt install openssh-server
+sudo systemctl start ssh
+sudo systemctl enable ssh
+sudo systemctl status ssh
+```
+允许root远程登录
+```
+vi /etc/ssh/sshd_config
+找到以下行并取消注释（如果已被注释掉），然后将其值设置为 yes
+PermitRootLogin yes
 
+重启服务：
+sudo systemctl restart ssh
+```
 
 ----
 # 另一种方式
