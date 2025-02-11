@@ -1,4 +1,23 @@
 # debian12 提示systemd-journald time jumped backwards rotating
+`还是有问题，感觉是pve与虚拟机的时间不同步造成的！！！`
+目前改了pve8的时间服务器指向阿里的：https://blog.imbhj.com/archives/ah0qTDuT
+同时也禁用了虚拟机debian的时间同步
+```
+systemctl stop systemd-timesyncd
+systemctl disable systemd-timesyncd
+
+# 停用ntp
+systemctl stop ntp
+systemctl disable ntp
+apt purge ntp
+apt autoremove
+systemctl status ntp
+```
+2025-02-12 00:00:00 等观察结果
+
+
+
+----
 > 这条消息是 systemd-journald 的一个日志条目，表示系统时间发生了倒退。`systemd-journald` 是 `systemd` 的日志守护进程，用于收集和管理系统日志。出现这种情况的原因可能有以下几种：
 1. 系统时间被手动修改。
 2. 硬件时钟出现问题。
