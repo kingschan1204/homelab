@@ -18,7 +18,7 @@ cp ./2024.12.24-openwrt-x86-64-squashfs-efi.img /var/lib/vz/template/iso/
 3. 磁盘这里，选择左侧删除按钮，将磁盘删除；因为会将 img 文件导入作为磁盘，因此这里不需要
 4. 按需配置 CPU 和内存；通常 1核和 512M就已经足够了
 
-[](https://img.hellowood.dev/picture/homelab-openwrt-pve-init-configuration.png)
+<img src="https://raw.githubusercontent.com/kingschan1204/homelab/refs/heads/main/openwrt/img/homelab-openwrt-pve-init-configuration.avif">
 
 ## 虚拟机添加硬盘
 > 将 img 镜像导入为虚拟磁盘,打开 PVE 的 shell，执行导入命令，将 img 作为虚拟磁盘，导入到 103虚拟机（即刚才创建的虚拟机的 vmid）
@@ -27,14 +27,17 @@ qm importdisk 103 /var/lib/vz/template/iso/2024.12.24-openwrt-x86-64-squashfs-ef
 ```
 > 待导入完成后，会在虚拟机中显示未使用的磁盘
 
-![picture](data:image/png;base64......)
+<img src="https://raw.githubusercontent.com/kingschan1204/homelab/refs/heads/main/openwrt/img/homelab-openwrt-pve-init-add-disk-to-vm-0.avif">
 
 > 选择该磁盘，修改 “总线/设备” 为 SATA，然后点击添加
 
-![picture](data:image/png;base64......)
+<img src="https://raw.githubusercontent.com/kingschan1204/homelab/refs/heads/main/openwrt/img/homelab-openwrt-pve-init-add-disk-to-vm-1.avif">
+
 ## 修改引导顺序
 > 默认的引导项是 CD 驱动和网卡，需要修改为添加的硬盘才能启动； 选择虚拟机的选项-引导顺序，选择添加的 sata0 磁盘作为引导
-![picture](data:image/png;base64......)
+
+<img src="https://raw.githubusercontent.com/kingschan1204/homelab/refs/heads/main/openwrt/img/homelab-openwrt-pve-init-set-boot-order.avif">
+
 > 配置完成后启动虚拟机，在控制台可以看到 OpenWrt 正常启动安装
 
 ## 网络配置
