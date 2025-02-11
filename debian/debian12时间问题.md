@@ -14,6 +14,9 @@ apt autoremove
 systemctl status ntp
 ```
 2025-02-12 00:00:00 等观察结果
+---
+改了一下选项配置 继续观察
+【选项】-【使用本地时间进行RTC】-【默认(为windows启用)】
 
 
 
