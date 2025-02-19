@@ -8,7 +8,7 @@
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
-确保系统软件包为最新版本。[6]
+确保系统软件包为最新版本。
 
 ---
 
@@ -16,7 +16,7 @@ sudo apt update && sudo apt upgrade -y
 ```bash
 sudo apt install postgresql postgresql-contrib -y
 ```
-安装 PostgreSQL 数据库服务器及常用工具（如扩展支持）。[2][6][7]
+安装 PostgreSQL 数据库服务器及常用工具（如扩展支持）。
 
 ---
 
@@ -24,7 +24,7 @@ sudo apt install postgresql postgresql-contrib -y
 ```bash
 sudo systemctl status postgresql
 ```
-检查服务是否正常运行（显示 `active (running)` 即为成功）。[6]
+检查服务是否正常运行（显示 `active (running)` 即为成功）。
 
 ---
 
@@ -32,7 +32,7 @@ sudo systemctl status postgresql
 ```bash
 sudo -i -u postgres psql
 ```
-以默认管理员用户 `postgres` 身份进入数据库命令行。[6][7]
+以默认管理员用户 `postgres` 身份进入数据库命令行。
 
 ---
 
@@ -42,7 +42,7 @@ sudo -i -u postgres psql
 ALTER USER postgres WITH PASSWORD '你的新密码';
 \q  # 退出控制台
 ```
-修改 `postgres` 用户的密码以增强安全性。[6][7]
+修改 `postgres` 用户的密码以增强安全性。
 
 ---
 
@@ -51,7 +51,7 @@ ALTER USER postgres WITH PASSWORD '你的新密码';
    ```bash
    sudo nano /etc/postgresql/*/main/postgresql.conf
    ```
-   修改 `listen_addresses = '*'` 以允许远程连接。[1][6]
+   修改 `listen_addresses = '*'` 以允许远程连接。
 
 配置访问权限：
    ```bash
@@ -73,7 +73,7 @@ ALTER USER postgres WITH PASSWORD '你的新密码';
 ```bash
 sudo apt install pgadmin3 -y
 ```
-安装 `pgAdmin III` 方便可视化操作。[7]
+安装 `pgAdmin III` 方便可视化操作。
 
 ---
 
@@ -82,10 +82,7 @@ sudo apt install pgadmin3 -y
 ```bash
 sudo -i -u postgres psql -c "\l"
 ```
-若显示默认数据库（如 `postgres`, `template1`），则安装成功。[6]
+若显示默认数据库（如 `postgres`, `template1`），则安装成功。
 
 ---
 
-附注
-源码安装：如需自定义编译安装，可参考源码包步骤（需处理依赖和配置）。[1]
-用户管理：建议创建独立用户和数据库，而非直接使用 `postgres` 超级用户。[2][6]
