@@ -15,6 +15,17 @@ sudo apt-get install -y clickhouse-server clickhouse-client
 sudo service clickhouse-server start
 clickhouse-client # or "clickhouse-client --password" if you've set up a password.
 ```
+# 允许clickhouse远程连接
+```
+vi /etc/clickhouse-server/config.xml
+找到下面这一行，去掉注释放开
+<listen_host>::</listen_host>
+
+# 重启一下服务
+systemctl restart clickhouse-server
+
+
+```
 
 ## 测试是否安装成功
 ```
