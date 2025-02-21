@@ -1,5 +1,6 @@
 # debian12安装clickhouse
 > 建议使用Debian或Ubuntu的官方预编译deb软件包。运行以下命令来安装包:
+> 参考官方安装：https://clickhouse.com/docs/zh/getting-started/install
 
 ```
 sudo apt-get install -y apt-transport-https ca-certificates dirmngr
