@@ -1,5 +1,6 @@
-# debian12安装openjdk17
+# debian12中java环境搭建
 
+## jdk安装
 > Debian 系统的官方软件源中通常包含了 OpenJDK 17 的软件包
 ```
 apt install openjdk-17-jdk
@@ -25,4 +26,22 @@ PATH="$PATH:$JAVA_HOME/bin"
 > 执行以下命令使环境变量立即生效：
 ```
 source /etc/environment
+```
+
+
+## debian12安装maven
+```
+apt install maven
+mvn -version
+```
+
+## 安装git
+```
+apt install git -y
+git --version
+# 配置全局用户信息
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+# 查看配置信息
+git config --list
 ```
