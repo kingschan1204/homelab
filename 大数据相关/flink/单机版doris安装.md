@@ -177,10 +177,27 @@ SHOW PROC '/backends'\G
 
 #### **6.2 简单测试**
 ```sql
+-- 创建数据库
 CREATE DATABASE test_db;
 USE test_db;
-CREATE TABLE test_table (id INT, name VARCHAR(20)) DISTRIBUTED BY HASH(id);
-INSERT INTO test_table VALUES (1, 'Doris Test');
+
+-- 创建表
+-- 单节点需要设置："replication_num" = "1"
+CREATE TABLE test_table (
+    id INT,
+    name VARCHAR(100),
+    age INT
+) ENGINE=OLAP
+DUPLICATE KEY(id)
+DISTRIBUTED BY HASH(id) BUCKETS 10
+PROPERTIES (
+    "replication_num" = "1"
+);
+
+-- 插入数据
+INSERT INTO test_table VALUES (1, 'Alice', 25);
+
+-- 查询数据
 SELECT * FROM test_table;
 ```
 
