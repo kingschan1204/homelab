@@ -4,18 +4,6 @@ Flink 1.20.1的单机安装非常简单，以下是详细步骤：
 
 #### 1. 环境准备
 首先需要确保系统中已安装Java 11或更高版本：
-```bash
-java -version
-```
-如果没有安装Java，可以使用以下命令安装：
-```bash
-# Ubuntu/Debian系统
-sudo apt-get update
-sudo apt-get install openjdk-11-jdk
-
-# CentOS/RHEL系统
-sudo yum install java-11-openjdk-devel
-```
 
 #### 2. 下载并解压Flink
 从Apache官网下载Flink 1.20.1：
