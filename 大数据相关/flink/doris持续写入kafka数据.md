@@ -87,57 +87,14 @@ FROM KAFKA
 
 ---
 
-### 五、处理复杂 JSON 结构
-如果 JSON 数据有嵌套结构，例如：
-```json
-{
-  "order": {
-    "order_id": 1001,
-    "items": [
-      {"name": "book", "quantity": 2},
-      {"name": "pen", "quantity": 5}
-    ]
-  }
-}
-```
-
-#### 1. 定义 Doris 表：
-```sql
-CREATE TABLE example_db.orders (
-    order_id BIGINT,
-    items JSON
-)
-DUPLICATE KEY(order_id);
-```
-
-#### 2. 配置 Routine Load：
-```sql
-CREATE ROUTINE LOAD example_db.kafka_nested_json_load ON orders
-PROPERTIES
-(
-    "format" = "json",
-    "jsonpaths" = "[\"$.order.order_id\", \"$.order.items\"]",  -- 指定嵌套路径
-    "strip_outer_array" = "true"
-)
-FROM KAFKA(...)
-COLUMNS(order_id, items);
-```
-
----
-
-### 六、关键注意事项
-1. **时区问题**：  
-   Doris 默认使用 UTC 时区，若 Kafka 数据时间字段为本地时区，需在 `COLUMNS` 中转换：
-   ```sql
-   event_time = CONVERT_TZ(str_to_date(event_time, "%Y-%m-%d %H:%i:%s"), "UTC", "Asia/Shanghai")
-   ```
-
-2. **字段顺序**：  
-   `jsonpaths` 中字段顺序需与 Doris 表结构一致。
-
-3. **错误处理**：  
-   若 JSON 解析失败，可通过 `SHOW ROUTINE LOAD TASK WHERE JobName = "kafka_json_load"` 查看错误日志。
-
----
-
 通过以上配置，即可实现 JSON 数据从 Kafka 到 Doris 的持续写入。
+
+
+## 在 Doris 删除（停止并移除）一个 ROUTINE LOAD 任务
+```
+# 先停止任务
+STOP ROUTINE LOAD FOR test_db.kafka_user_behavior_load;
+
+```
+> 在 Doris 2.1.x，Routine Load 任务停止后会保留在历史记录中，不需要再 DROP，也无法 DROP，所以不要再写 DROP ROUTINE LOAD。
+
