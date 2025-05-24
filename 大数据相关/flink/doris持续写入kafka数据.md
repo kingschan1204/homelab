@@ -94,6 +94,8 @@ FROM KAFKA
 ```
 # 先停止任务
 STOP ROUTINE LOAD FOR test_db.kafka_user_behavior_load;
+# 查看所有数据库的 routine load（含历史）
+SHOW ALL ROUTINE LOAD;
 
 ```
 > 在 Doris 2.1.x，Routine Load 任务停止后会保留在历史记录中，不需要再 DROP，也无法 DROP，所以不要再写 DROP ROUTINE LOAD。
