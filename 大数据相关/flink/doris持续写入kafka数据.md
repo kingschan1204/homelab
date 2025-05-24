@@ -25,9 +25,10 @@ CREATE TABLE user_behavior (
     price DECIMAL(10, 2),
     tags JSON
 )
-DUPLICATE KEY(user_id, event_time)
+UNIQUE KEY(user_id, event_time)
 DISTRIBUTED BY HASH(user_id) BUCKETS 8
 PROPERTIES ("replication_num" = "1");
+
 ```
 
 ---
@@ -54,8 +55,21 @@ FROM KAFKA
     "kafka_partitions" = "0",
     "kafka_offsets" = "OFFSET_BEGINNING"
 );
-```
 
+
+```
+"desired_concurrent_number"="3"
+希望同时有3个并发导入线程/任务，提高加载吞吐量。
+"max_batch_interval" = "20"
+每20秒触发一次批量导入（如果还未达到行数或大小限制）。
+"max_batch_rows" = "500000"
+每批最多处理50万行数据。
+"max_batch_size" = "209715200"
+每批最大数据量为200MB（20010241024 字节）。
+"strict_mode" = "false"
+非严格模式，遇到部分脏数据不报错，尽量导入更多有效数据。
+"format" = "json"
+指定Kafka中的消息为JSON格式。
 ---
 
 ### 三、测试数据样例
