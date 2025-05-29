@@ -18,7 +18,8 @@ tar -zxvf apache-dolphinscheduler-3.2.0-bin.tar.gz
 ```
 vim bin/env/dolphinscheduler_env.sh
 export DATABASE=mysql
-export SPRING_PROFILES_ACTIVE=jdbc:mysql://192.168.1.73:3306/ds1?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+export SPRING_PROFILES_ACTIVE=${DATABASE}
+export SPRING_DATASOURCE_URL=jdbc:mysql://192.168.1.73:3306/ds1?useUnicode=true&characterEncoding=UTF-8&useSSL=false
 export SPRING_DATASOURCE_USERNAME=root
 export SPRING_DATASOURCE_PASSWORD=root123
 ```
