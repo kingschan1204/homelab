@@ -65,8 +65,18 @@ bash tools/bin/upgrade-schema.sh
 ## 启动 standalone-server
 > 此时你已经连接上mysql，重启 或 停止 standalone-server 并不会清空您数据库里的数据
 ```
+
 # 启动 Standalone Server 服务
 bash ./bin/dolphinscheduler-daemon.sh start standalone-server
+
+# 停止 Standalone Server 服务
+bash ./bin/dolphinscheduler-daemon.sh stop standalone-server
+
+# 查看 Standalone Server 状态
+bash ./bin/dolphinscheduler-daemon.sh status standalone-server
+
+# 查看日志
+tail -fn 200 standalone-server/logs/dolphinscheduler-standalone.log
 ```
 ## 访问系统
 ```
