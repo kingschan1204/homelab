@@ -33,6 +33,8 @@ systemctl enable doris-be
 ```
 systemctl start doris-fe
 systemctl start doris-be
+# 查看开机启动的服务
+systemctl list-unit-files --type=service --state=enabled
 ```
 ## 官方参考文档
 https://doris.apache.org/zh-CN/docs/admin-manual/maint-monitor/automatic-service-start
