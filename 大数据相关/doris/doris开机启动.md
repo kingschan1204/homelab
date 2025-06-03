@@ -3,8 +3,8 @@
 ## 1. JAVA_HOME变量配置
 > 分别在 fe.conf 和 be.conf 中添加 JAVA_HOME 变量配置，否则使用 systemctl start 将无法启动服务
 ```
-echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> /home/doris/fe/conf/fe.conf
-echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> /home/doris/be/conf/be.conf
+echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> /usr/doris/fe/conf/fe.conf
+echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> /usr/doris/be/conf/be.conf
 ```
 
 ## 2.下载 doris-fe.service 文件：doris-fe.service
