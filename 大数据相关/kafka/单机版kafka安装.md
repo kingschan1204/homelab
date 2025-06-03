@@ -8,6 +8,7 @@ tar -xzf kafka_2.13-4.0.0.tgz
 cd kafka_2.13-4.0.0
 
 # 步骤1：新建集群，需要生成集群唯一的cluster id，可以使用官方工具生成，如下：
+> 如果没有搞成服务，重启服务器 步骤1~4要重新执行一下
  KAFKA_CLUSTER_ID="$(bin/kafka-storage.sh random-uuid)"
  echo $KAFKA_CLUSTER_ID
 

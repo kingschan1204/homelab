@@ -89,9 +89,12 @@ FROM KAFKA
 ### 四、验证数据导入
 1. **查看导入任务状态**：
    ```sql
-   SHOW ROUTINE LOAD FOR example_db.kafka_json_load;
+   SHOW ROUTINE LOAD FOR test_db.kafka_user_behavior_load;
    ```
-   确保任务状态为 `RUNNING`。
+   确保任务状态为 `RUNNING`如果是`PAUSED`执行如下命令恢复
+   ```
+   RESUME ROUTINE LOAD FOR test_db.kafka_user_behavior_load;
+   ```
 
 2. **查询 Doris 表数据**：
    ```sql
