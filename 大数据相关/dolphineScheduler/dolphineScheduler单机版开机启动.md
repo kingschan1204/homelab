@@ -1,4 +1,4 @@
-# dolphineScheduler开机启动
+# dolphineScheduler单机版开机启动
 ## 创建`dolphinscheduler.service`
 
 ```
