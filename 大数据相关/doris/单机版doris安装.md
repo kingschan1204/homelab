@@ -93,6 +93,19 @@ cat /proc/sys/vm/max_map_count
 # 查看日志确认是否成功
 tail -f be/log/be.log
 ```
+```
+vi /etc/security/limits.conf
+# * 对root用户不生效
+* soft nofile 655350
+* hard nofile 655350
+
+# 如果是root用户则变成
+root soft nofile 655350
+root hard nofile 655350
+
+# 检查是否生效
+ulimit -n
+```
 
 > jdk问题
 ```
