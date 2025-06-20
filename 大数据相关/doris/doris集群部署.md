@@ -159,6 +159,7 @@ SHOW PROC '/backends';
 > 部署 FE 集群
 >> FE Follower（包括 Master）节点的数量建议为奇数，建议部署 3 个组成高可用模式。
 >> 当 FE 处于高可用部署时（1 个 Master，2 个 Follower），我们建议通过增加 Observer FE 来扩展 FE 的读服务能力
+> 由于是从主节点整个虚拟机复制过来的所以需要删除fe metadata目录再启动fe服务，不然alive服务一直是false
 ```
 # 通过以下命令，可以启动 FE Follower 节点，并自动同步元数据。
 bin/start_fe.sh --helper <helper_fe_ip>:<fe_edit_log_port> --daemon
@@ -167,11 +168,23 @@ bin/start_fe.sh --helper <helper_fe_ip>:<fe_edit_log_port> --daemon
 # 添加node1
 # 在主节点mysql客户端执行
 # 要先在主节点添加后，再去从节点执行启动fe服务的命令
+# 注册node1 mysql中执行
 ALTER SYSTEM ADD FOLLOWER "192.168.50.154:9010";
+# 启动Node1 fe服务
+./fe/bin/start_fe.sh --helper 192.168.50.229:9010 --daemon
+
+
+#注册node2
+ALTER SYSTEM ADD FOLLOWER "192.168.50.21:9010";
+# 启动Node2 fe服务
+# 由于是从主节点整个虚拟机复制过来的所以需要删除fe metadata目录再启动
+./fe/bin/stop_fe.sh 
+./fe/bin/start_fe.sh --helper 192.168.50.229:9010 --daemon
+
 ALTER SYSTEM DROP FOLLOWER "192.168.50.154:9010";
 SHOW PROC '/frontends'\G
 # 在node1执行
-./fe/bin/start_fe.sh --helper 192.168.50.229:9010 --daemon
+
 ```
 ---
 ```
