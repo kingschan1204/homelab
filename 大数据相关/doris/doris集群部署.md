@@ -1,10 +1,9 @@
 # doris3 集群部署
 > 3节点，资源有限每个节点安装BE 第一台安装的节点作为master节点，master节点安装fe
-```
-# 查看 FE 运行状态
-curl http://127.0.0.1:8030/api/bootstrap
-```
+
+
 ## 准备工作，系统设置
+### /etc/sysctl.conf
 ```
 # 编辑 sysctl 配置文件
 vi /etc/sysctl.conf
@@ -20,6 +19,9 @@ sysctl -p
 cat /proc/sys/vm/max_map_count
 
 
+```
+### /etc/security/limits.conf
+```
 vi /etc/security/limits.conf
 # * 对root用户不生效
 * soft nofile 655350
@@ -31,27 +33,18 @@ root hard nofile 655350
 
 # 检查是否生效 断开会话，重新登录再执行
 ulimit -n
-
-
-
-
-# 停止 BE 服务
-./be/bin/stop_be.sh
-
-# 启动 BE 服务
-./be/bin/start_be.sh --daemon
-
-# 查看日志确认是否成功
-tail -f be/log/be.log
 ```
 
-## 数据目录放数据盘
+
+### 数据目录放数据盘
 ```
 # /data挂载另一块磁盘
 mkdir -p /data/doris/fe/doris-meta
 mkdir -p /data/doris/fe/log
 
 ```
+---
+
 ## fe.conf
 ```
 # 元数据目录
@@ -61,7 +54,7 @@ LOG_DIR = /data/doris/fe/log
 # 绑定集群ip网段
 priority_networks = 192.168.50.0/24
 ```
-### priority_networks网段查看
+> priority_networks网段查看
 ```
 获取 Doris 节点所处的内网网段，此示例的内网网段的 CIDR 是 10.1.11.0/24。
 如不清楚，也可执行命令查询：
@@ -108,17 +101,27 @@ JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 ## 启动查看效果
 ```
-# 启动 FE（首次启动需指定 --daemon 后台运行）
-./fe/bin/start_fe.sh --daemon
+# 启动 FE
+./usr/doris/fe/bin/start_fe.sh --daemon
+# 停止FE
+./usr/doris/fe/bin/stop_fe.sh
 
 # 查看 FE 日志确认状态
 tail -f /data/doris/fe/log/fe.log
+# 查看 FE 运行状态
+curl http://127.0.0.1:8030/api/bootstrap
+
 
 # 启动 BE
-./be/bin/start_be.sh --daemon
+./usr/doris/be/bin/start_be.sh --daemon
+
+# 停止 BE 服务
+./usr/doris/be/bin/stop_be.sh
 
 # 查看 BE 日志确认状态
 tail -f /data/doris/be/log/be.out
+
+
 ```
 
 ### 将 BE 注册到 FE
@@ -219,6 +222,8 @@ ALTER SYSTEM DECOMMISSION BACKEND "192.168.50.116:9050";
 ALTER SYSTEM DROP BACKEND "192.168.50.116:9050";
 
 ```
+
+
 
 ## 参考
 https://doris.apache.org/zh-CN/docs/3.0/install/deploy-manually/integrated-storage-compute-deploy-manually
