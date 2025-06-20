@@ -152,10 +152,13 @@ SHOW PROC '/backends';
 ```
 # 在mater节点登录
 mysql -h 127.0.0.1 -P 9030 -u root
+
 # 注册node1 到master节点
 ALTER SYSTEM ADD BACKEND "192.168.50.154:9050";
+
 # 注册node2 到master节点
 ALTER SYSTEM ADD BACKEND "192.168.50.21:9050";
+
 # 再次检查 BE 状态，确保 Alive 为 true
 SHOW PROC '/backends';
 ```
