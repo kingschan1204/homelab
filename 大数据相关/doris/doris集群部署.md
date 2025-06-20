@@ -1,5 +1,5 @@
 # doris3 集群部署
-> 3节点，资源有限每个节点安装FE，BE 第一台安装的节点作为master节点
+> 3节点，资源有限每个节点安装BE 第一台安装的节点作为master节点，master节点安装fe
 ```
 # 查看 FE 运行状态
 curl http://127.0.0.1:8030/api/bootstrap
@@ -138,11 +138,42 @@ SHOW PROC '/backends';  # 查看 BE 节点状态
 # 注册 BE 节点 (使用实际 IP 和端口)
 ALTER SYSTEM ADD BACKEND "127.0.0.1:9050";
 
+
 # 再次检查 BE 状态，确保 Alive 为 true
 SHOW PROC '/backends';
 ```
 
+
 ## node 1 node 2 
+> 复制虚拟机为node1、node2然后启动be服务并注册到主节点
+```
+# 在mater节点登录
+mysql -h 127.0.0.1 -P 9030 -u root
+# 注册node1 到master节点
+ALTER SYSTEM ADD BACKEND "192.168.50.154:9050";
+# 注册node2 到master节点
+ALTER SYSTEM ADD BACKEND "192.168.50.21:9050";
+# 再次检查 BE 状态，确保 Alive 为 true
+SHOW PROC '/backends';
+```
+> 部署 FE 集群
+>> FE Follower（包括 Master）节点的数量建议为奇数，建议部署 3 个组成高可用模式。
+>> 当 FE 处于高可用部署时（1 个 Master，2 个 Follower），我们建议通过增加 Observer FE 来扩展 FE 的读服务能力
+```
+# 通过以下命令，可以启动 FE Follower 节点，并自动同步元数据。
+bin/start_fe.sh --helper <helper_fe_ip>:<fe_edit_log_port> --daemon
+# 其中，helper_fe_ip 是 FE 集群中任何存活节点的 IP 地址。--helper 参数仅在第一次启动 FE 时需要，之后重启无需指定。
+
+# 添加node1
+# 在主节点mysql客户端执行
+# 要先在主节点添加后，再去从节点执行启动fe服务的命令
+ALTER SYSTEM ADD FOLLOWER "192.168.50.154:9010";
+ALTER SYSTEM DROP FOLLOWER "192.168.50.154:9010";
+SHOW PROC '/frontends'\G
+# 在node1执行
+./fe/bin/start_fe.sh --helper 192.168.50.229:9010 --daemon
+```
+---
 ```
 systemctl stop doris-fe
 systemctl stop doris-be
@@ -177,5 +208,4 @@ ALTER SYSTEM DROP BACKEND "192.168.50.116:9050";
 ```
 
 ## 参考
-https://juejin.cn/post/7302023698722471977
-https://doris.apache.org/zh-CN/docs/2.0/install/cluster-deployment/standard-deployment#3-%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92
+https://doris.apache.org/zh-CN/docs/3.0/install/deploy-manually/integrated-storage-compute-deploy-manually
