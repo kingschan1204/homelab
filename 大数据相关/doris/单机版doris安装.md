@@ -133,7 +133,7 @@ source /etc/profile
 
 # 验证全局生效
 su - root  # 重新登录 root 账户
-echo $JAVA_HOME  # 应显示 Java 11 路径
+echo $JAVA_HOME  # 应显示 Java 17 路径
 ```
 > 问题3
 ```

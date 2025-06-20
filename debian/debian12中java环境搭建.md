@@ -18,15 +18,21 @@ root@localhost:~# readlink -f $(which java) | sed "s:bin/java::"
 ```
 > 编辑环境变量文件
 ```
-vi /etc/environment
-# 输入以下内容
+# 编辑配置文件（如 ~/.bashrc 或 /etc/profile）
+sudo vi /etc/profile
+
+# 在文件末尾添加以下内容
 JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64/"
 PATH="$PATH:$JAVA_HOME/bin"
+
+# 使配置生效
+source /etc/profile
+
+# 验证全局生效
+su - root  # 重新登录 root 账户
+echo $JAVA_HOME  # 应显示 Java 17 路径
 ```
-> 执行以下命令使环境变量立即生效：
-```
-source /etc/environment
-```
+
 
 
 ## debian12安装maven
