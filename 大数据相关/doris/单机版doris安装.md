@@ -158,7 +158,7 @@ source /etc/profile
 ---
 
 ### **5. 将 BE 注册到 FE**
-通过 MySQL 客户端连接 FE，执行以下命令：
+> 通过 MySQL 客户端连接 FE，执行以下命令：
 ```bash
 
 # debian 12安装mysql客户端
