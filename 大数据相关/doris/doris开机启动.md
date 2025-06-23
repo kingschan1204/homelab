@@ -36,7 +36,7 @@ WantedBy=multi-user.target
 ##  doris-be.service
 ```
 [Unit]
-Description=Doris FE
+Description=Doris BE
 After=network-online.target
 Wants=network-online.target
 
@@ -51,8 +51,8 @@ RestartSec=30
 StartLimitInterval=120
 StartLimitBurst=3
 KillMode=none
-ExecStart=/usr/doris/fe/bin/start_fe.sh --daemon
-ExecStop=/usr/doris/fe/bin/stop_fe.sh
+ExecStart=/home/doris/be/bin/start_be.sh --daemon
+ExecStop=/home/doris/be/bin/stop_be.sh
 
 [Install]
 WantedBy=multi-user.target
